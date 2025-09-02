@@ -7,9 +7,9 @@ import ProjetoCaixadAgua.Enum.Material
 
 fun criarTabelaCaixa(){
     val conectar = EntidadeJDBC(
-        url = "jdbc:postgresql://localhost:5432/projetocaixa",
+        url = "jdbc:postgresql://localhost:5433/GerenciamentoDeCaixaDAgua",
         usuario = "postgres",
-        senha = "postgres"
+        senha = "1313"
     )
 
     val sql = "CREATE TABLE IF NOT EXISTS CaixaDAgua " +
