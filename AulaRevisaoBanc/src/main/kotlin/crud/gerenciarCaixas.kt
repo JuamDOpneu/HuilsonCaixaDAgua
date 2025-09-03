@@ -5,12 +5,14 @@ import ProjetoCaixadAgua.Enum.MaterialCaixa
 import ProjetoCaixadAgua.Enum.Corcaixa
 import ProjetoCaixadAgua.Enum.Material
 
+val conectar = EntidadeJDBC(
+    url = "jdbc:postgresql://localhost:5433/GerenciamentoDeCaixaDAgua",
+    usuario = "postgres",
+    senha = "1313"
+)
+
 fun criarTabelaCaixa(){
-    val conectar = EntidadeJDBC(
-        url = "jdbc:postgresql://localhost:5433/GerenciamentoDeCaixaDAgua",
-        usuario = "postgres",
-        senha = "1313"
-    )
+
 
     val sql = "CREATE TABLE IF NOT EXISTS CaixaDAgua " +
             " (id serial NOT NULL PRIMARY KEY," +
@@ -87,7 +89,10 @@ fun cadastrarCaixa(){
     println("Profundidade da caixa:")
     val profundidade = readln().toDouble()
 
-    CaixaDAgua(
+
+
+
+    val c = CaixaDAgua(
         material = material,
         capacidade = litros,
         cor = cor,
@@ -97,6 +102,27 @@ fun cadastrarCaixa(){
         peso = peso,
         profundidade = profundidade
     )
+
+    val banco = conectar.conectarComBanco()!!.prepareStatement(
+        "INSERT INTO CaixaDAgua" +
+                " (material, capacidade, cor, preco, altura, largura, peso, profundidade)" +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+
+    )
+        banco.setString(1, c.material.name)//enums
+        banco.setInt(2, c.capacidade!!)
+        banco.setString(3, c.cor.toString())
+        banco.setString(4, c.preco.toString())
+        banco.setDouble(5, c.altura)
+        banco.setDouble(6, c.largura)
+        banco.setDouble(7, c.profundidade)
+        banco.setDouble(8, c.largura)
+
+        banco.executeUpdate()//isso fara commit no banco
+
+        banco.close()//fecha a transaçao e a conexão com o banco
+
+
 
 }
 

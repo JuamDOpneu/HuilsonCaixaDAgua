@@ -1,4 +1,5 @@
 package ui
+import crud.cadastrarCaixa
 
 fun menu(){
     do {
@@ -11,7 +12,7 @@ fun menu(){
         var opcao = readln().toInt()
         when(opcao){
             0-> println("Saiu")
-            1-> println("Cadastrando caixa...")
+            1-> cadastrarCaixa()
             2-> println("Editando caixa...")
             3-> println("Listar caixas...")
             4-> println("Excluindo caixa...")
